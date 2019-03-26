@@ -1,0 +1,249 @@
+---
+  infra1:
+    uuid: "c13c8897-972c-48a8-b6b5-427b2cf68c55"
+    driver_info:
+      power:
+        ipmi_username: "root"
+        ipmi_address: "10.0.2.1"
+        ipmi_password: "secrete"
+        ipmi_port: "624"
+    nics:
+      -
+        mac: "52:54:00:bd:80:01"
+    driver: "ipmi"
+    ipv4_address: "10.0.2.101"
+    ipv4_subnet_mask: "255.255.252.0"
+    ipv4_gateway: "10.0.2.1"
+    properties:
+      cpu_arch: "x86_64"
+      ram: "32760"
+      disk_size: "90"
+      cpus: "16"
+    name: "infra1"
+
+  infra2:
+    uuid: "24b71d47-affc-4d6d-83bb-8861fc8ad1f5"
+    driver_info:
+      power:
+        ipmi_username: "root"
+        ipmi_address: "10.0.2.1"
+        ipmi_password: "secrete"
+        ipmi_port: "625"
+    nics:
+      -
+        mac: "52:54:00:bd:80:02"
+    driver: "ipmi"
+    ipv4_address: "10.0.2.102"
+    ipv4_subnet_mask: "255.255.252.0"
+    ipv4_gateway: "10.0.2.1"
+    properties:
+      cpu_arch: "x86_64"
+      ram: "32760"
+      disk_size: "90"
+      cpus: "16"
+    name: "infra2"
+
+  infra3:
+    uuid: "b2f36aa0-6806-4910-9d68-2827ce5e71c7"
+    driver_info:
+      power:
+        ipmi_username: "root"
+        ipmi_address: "10.0.2.1"
+        ipmi_password: "secrete"
+        ipmi_port: "626"
+    nics:
+      -
+        mac: "52:54:00:bd:80:03"
+    driver: "ipmi"
+    ipv4_address: "10.0.2.103"
+    ipv4_subnet_mask: "255.255.252.0"
+    ipv4_gateway: "10.0.2.1"
+    properties:
+      cpu_arch: "x86_64"
+      ram: "32760"
+      disk_size: "90"
+      cpus: "16"
+    name: "infra3"
+
+  compute1:
+    uuid: "dc6a1d60-a564-437f-a3be-ee89230ad423"
+    driver_info:
+      power:
+        ipmi_username: "root"
+        ipmi_address: "10.0.2.1"
+        ipmi_password: "secrete"
+        ipmi_port: "627"
+    nics:
+      -
+        mac: "52:54:00:bd:80:05"
+    driver: "ipmi"
+    ipv4_address: "10.0.2.120"
+    ipv4_subnet_mask: "255.255.252.0"
+    ipv4_gateway: "10.0.2.1"
+    properties:
+      cpu_arch: "x86_64"
+      ram: "32760"
+      disk_size: "90"
+      cpus: "16"
+    name: "compute1"
+
+  compute2:
+    uuid: "ca433442-836c-4ed9-9640-a79b45a870ac"
+    driver_info:
+      power:
+        ipmi_username: "root"
+        ipmi_address: "10.0.2.1"
+        ipmi_password: "secrete"
+        ipmi_port: "628"
+    nics:
+      -
+        mac: "52:54:00:bd:80:06"
+    driver: "ipmi"
+    ipv4_address: "10.0.2.121"
+    ipv4_subnet_mask: "255.255.252.0"
+    ipv4_gateway: "10.0.2.1"
+    properties:
+      cpu_arch: "x86_64"
+      ram: "32760"
+      disk_size: "90"
+      cpus: "16"
+    name: "compute2"
+
+  ceph1:
+    uuid: "b87a315d-ac77-4ea9-b87b-4cb6ce741046"
+    driver_info:
+      power:
+        ipmi_username: "root"
+        ipmi_address: "10.0.2.1"
+        ipmi_password: "secrete"
+        ipmi_port: "629"
+    nics:
+      -
+        mac: "52:54:00:bd:80:07"
+    driver: "ipmi"
+    ipv4_address: "10.0.2.145"
+    ipv4_subnet_mask: "255.255.252.0"
+    ipv4_gateway: "10.0.2.1"
+    properties:
+      cpu_arch: "x86_64"
+      ram: "4096"
+      disk_size: "90"
+      cpus: "2"
+      root_device:
+        size: ">=80"
+    name: "ceph1"
+
+  ceph2:
+    uuid: "feaac35e-cb6a-4695-be5a-04856780200b"
+    driver_info:
+      power:
+        ipmi_username: "root"
+        ipmi_address: "10.0.2.1"
+        ipmi_password: "secrete"
+        ipmi_port: "630"
+    nics:
+      -
+        mac: "52:54:00:bd:80:08"
+    driver: "ipmi"
+    ipv4_address: "10.0.2.161"
+    ipv4_subnet_mask: "255.255.252.0"
+    ipv4_gateway: "10.0.2.1"
+    properties:
+      cpu_arch: "x86_64"
+      ram: "4096"
+      disk_size: "90"
+      cpus: "2"
+      root_device:
+        size: ">=80"
+    name: "ceph2"
+
+  ceph3:
+    uuid: "2d0d718e-cbc0-4b3c-be48-a0eb31f7656a"
+    driver_info:
+      power:
+        ipmi_username: "root"
+        ipmi_address: "10.0.2.1"
+        ipmi_password: "secrete"
+        ipmi_port: "631"
+    nics:
+      -
+        mac: "52:54:00:bd:80:09"
+    driver: "ipmi"
+    ipv4_address: "10.0.2.162"
+    ipv4_subnet_mask: "255.255.252.0"
+    ipv4_gateway: "10.0.2.1"
+    properties:
+      cpu_arch: "x86_64"
+      ram: "4096"
+      disk_size: "90"
+      cpus: "2"
+      root_device:
+        size: ">=80"
+    name: "ceph3"
+
+#  swift1:
+#    uuid: "47720595-b4b6-4546-8b82-18bf808da90e"
+#    driver_info:
+#      power:
+#        ipmi_username: "root"
+#        ipmi_address: "10.0.2.1"
+#        ipmi_password: "secrete"
+#        ipmi_port: "632"
+#    nics:
+#      -
+#        mac: "52:54:00:bd:80:10"
+#    driver: "ipmi"
+#    ipv4_address: "10.0.2.140"
+#    ipv4_subnet_mask: "255.255.252.0"
+#    ipv4_gateway: "10.0.2.1"
+#    properties:
+#      cpu_arch: "x86_64"
+#      ram: "4096"
+#      disk_size: "90"
+#      cpus: "2"
+#    name: "swift1"
+
+#  swift2:
+#    uuid: "8d556f6d-ba81-4508-9546-072d58cbe1f0"
+#    driver_info:
+#      power:
+#        ipmi_username: "root"
+#        ipmi_address: "10.0.2.1"
+#        ipmi_password: "secrete"
+#        ipmi_port: "633"
+#    nics:
+#      -
+#        mac: "52:54:00:bd:80:11"
+#    driver: "ipmi"
+#    ipv4_address: "10.0.2.141"
+#    ipv4_subnet_mask: "255.255.252.0"
+#    ipv4_gateway: "10.0.2.1"
+#    properties:
+#      cpu_arch: "x86_64"
+#      ram: "4096"
+#      disk_size: "90"
+#      cpus: "2"
+#    name: "swift2"
+
+#  swift3:
+#    uuid: "57366147-31c1-494a-976c-678c27c43916"
+#    driver_info:
+#      power:
+#        ipmi_username: "root"
+#        ipmi_address: "10.0.2.1"
+#        ipmi_password: "secrete"
+#        ipmi_port: "634"
+#    nics:
+#      -
+#        mac: "52:54:00:bd:80:12"
+#    driver: "ipmi"
+#    ipv4_address: "10.0.2.142"
+#    ipv4_subnet_mask: "255.255.252.0"
+#    ipv4_gateway: "10.0.2.1"
+#    properties:
+#      cpu_arch: "x86_64"
+#      ram: "4096"
+#      disk_size: "90"
+#      cpus: "2"
+#    name: "swift3"
+

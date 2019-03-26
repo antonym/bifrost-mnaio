@@ -1,0 +1,101 @@
+---
+
+- name: Setup deployment host
+  hosts: deploy_hosts
+  gather_facts: "{{ gather_facts | default(true) }}"
+  environment: "{{ deployment_environment_variables | default({}) }}"
+  tags:
+    - deploy-bifrost
+  tasks:
+    - name: Gather variables for each operating system
+      include_vars: "{{ item }}"
+      with_first_found:
+        - "{{ playbook_dir }}/vars/{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.yml"
+        - "{{ playbook_dir }}/vars/{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+        - "{{ playbook_dir }}/vars/{{ ansible_os_family | lower }}-{{ ansible_distribution_major_version | lower }}.yml"
+        - "{{ playbook_dir }}/vars/{{ ansible_distribution | lower }}.yml"
+        - "{{ playbook_dir }}/vars/{{ ansible_os_family | lower }}.yml"
+      tags:
+        - always
+
+    - name: Create bifrost config directory
+      file:
+        path: /etc/bifrost
+        state: directory
+
+    - name: Install epel
+      package:
+        name:
+          - epel-release
+        state: present
+
+    - name: Install packages
+      package:
+        name:
+          - ansible
+          - python2-pip
+          - python-setuptools
+        state: present
+
+    - name: Get bifrost
+      git:
+        repo: "{{ bifrost_repo | default('https://github.com/openstack/bifrost') }}"
+        dest: /opt/bifrost
+        version: "{{ bifrost_branch | default('master') }}"
+        force: yes
+      when:
+        - pre_config_bifrost | default(true) | bool
+        - clone_bifrost | default(true) | bool
+ 
+    - name: Copy bifrost mnaio settings
+      copy:
+        src: bifrost/inventory/target
+        dest: /opt/bifrost/playbooks/inventory/group_vars/target
+
+    - name: Copy bifrost mnaio settings
+      copy:
+        src: bifrost/inventory/baremetal
+        dest: /opt/bifrost/playbooks/inventory/group_vars/baremetal
+
+    - name: Copy bifrost inventory source
+      copy:
+        src: bifrost/baremetal.yml
+        dest: /etc/bifrost/baremetal.yml
+
+    - name: Copy bifrost inventory source
+      copy:
+        src: bifrost/ceph-nodes.sh
+        dest: /etc/bifrost/ceph-nodes.sh
+
+    - name: Install bifrost requirements
+      pip:
+        requirements: /opt/bifrost/requirements.txt
+
+    - name: Install bifrost
+      command: "{{ item }}"
+      args:
+        chdir: /opt/bifrost/playbooks
+      with_items:
+        - ansible-playbook -i inventory/target install.yaml
+      when:
+        - inventory_hostname == groups['deploy_hosts'][0]
+        - run_bifrost | default(true) | bool        
+
+    - name: Enroll bifrost nodes
+      command: ansible-playbook -i inventory/bifrost_inventory.py enroll-dynamic.yaml
+      args:
+        chdir: /opt/bifrost/playbooks
+      environment:
+        BIFROST_INVENTORY_SOURCE: /etc/bifrost/baremetal.yml
+
+    - name: Specify root_device for ceph nodes - can drop this once ansible 2.8 releases
+      command: bash /etc/bifrost/ceph-nodes.sh
+      args:
+        chdir: /etc/bifrost
+
+    - name: Deploy bifrost nodes
+      command: ansible-playbook -i inventory/bifrost_inventory.py deploy-dynamic.yaml
+      args:
+        chdir: /opt/bifrost/playbooks
+      environment:
+        BIFROST_INVENTORY_SOURCE: /etc/bifrost/baremetal.yml
